@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Sak Regression Suite">
+    <test name="AndroidTests">
+        <parameter name="platformName" value="Android"/>
+        <parameter name="automationName" value="Flutter"/>
+        <parameter name="deviceName" value="Pixel_9_Pro_XL"/>
+        <classes>
+            <class name="tests.LoginTest"/>
+        </classes>
+    </test>
+    <!--    <test name="IOSTests">-->
+    <!--        <parameter name="platformName" value="ios"/>-->
+    <!--        <classes>-->
+    <!--            <class name="tests.LoginTest"/>-->
+    <!--        </classes>-->
+    <!--    </test>-->
+</suite>

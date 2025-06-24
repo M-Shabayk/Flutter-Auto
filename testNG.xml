@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Sak Regression Suite">
+    <test name="AndroidTests">
+        <parameter name="platformName" value="android"/>
+        <classes>
+            <class name="tests.LoginTest"/>
+        </classes>
+    </test>
+    <!--    <test name="IOSTests">-->
+    <!--        <parameter name="platformName" value="ios"/>-->
+    <!--        <classes>-->
+    <!--            <class name="tests.LoginTest"/>-->
+    <!--        </classes>-->
+    <!--    </test>-->
+</suite>
