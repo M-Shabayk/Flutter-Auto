@@ -9,6 +9,6 @@ public class LoginTest extends AndroidTestBase {
     @Test
     public void login() {
         loginPage = new LoginPage(driver, finder);
-        loginPage.tapLoginButton();
+        loginPage.clickOnLoginButton();
     }
 }

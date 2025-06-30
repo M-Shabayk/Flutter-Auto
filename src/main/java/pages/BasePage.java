@@ -1,15 +1,19 @@
 package pages;
 
 
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import io.github.ashwith.flutter.FlutterElement;
 import io.github.ashwith.flutter.FlutterFinder;
 import org.openqa.selenium.WebDriverException;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.Map;
 
 public class BasePage {
+    protected AndroidDriver androidDriver;
     protected final AppiumDriver driver;
     protected final FlutterFinder flutterFinder;
 
@@ -19,24 +23,45 @@ public class BasePage {
     }
 
     // 🔹 Reusable wait method for Flutter Element by valueKey
-    protected void waitForElementByKey(String key) {
-        try {
-            driver.executeScript("flutter:waitFor", Map.of(
-                    "finderType", "key",
-                    "keyValueString", key
-            ));
-        } catch (WebDriverException e) {
-            System.err.println("❌ Failed to wait for element with key: " + key);
-            e.printStackTrace();
+    protected void waitForElementByKey(String key, int timeoutInSeconds) {
+        long endTime = System.currentTimeMillis() + timeoutInSeconds * 1000L;
+        while (System.currentTimeMillis() < endTime) {
+            try {
+                driver.executeScript("flutter:waitFor", Map.of(
+                        "finderType", "key",
+                        "keyValueString", key
+                ));
+                return; // ✅ Found, exit the method
+            } catch (WebDriverException e) {
+                // Element not found yet, wait and retry
+                try {
+                    Thread.sleep(500); // ⏱️ wait half a second
+                } catch (InterruptedException ignored) {
+                }
+            }
         }
+        System.err.println("❌ Timed out waiting for element with key: " + key);
     }
 
     // 🔹 Wait for an element by visible text
-    protected void waitForElementByText(String text) {
-        driver.executeScript("flutter:waitFor", Map.of(
-                "finderType", "text",
-                "text", text
-        ));
+    protected void waitForElementByText(String text, int timeoutInSeconds) {
+        long endTime = System.currentTimeMillis() + timeoutInSeconds * 1000L;
+        while (System.currentTimeMillis() < endTime) {
+            try {
+                driver.executeScript("flutter:waitFor", Map.of(
+                        "finderType", "text",
+                        "keyValueString", text
+                ));
+                return; // ✅ Found, exit the method
+            } catch (WebDriverException e) {
+                // Element not found yet, wait and retry
+                try {
+                    Thread.sleep(500); // ⏱️ wait half a second
+                } catch (InterruptedException ignored) {
+                }
+            }
+        }
+        System.err.println("❌ Timed out waiting for element with key: " + text);
     }
 
     // 🔹 Get element by valueKey
@@ -62,7 +87,7 @@ public class BasePage {
     // 🔹Checks if an element is present and catch failure
     protected boolean isElementPresent(String key) {
         try {
-            waitForElementByKey(key);
+            waitForElementByKey(key, 10);
             getElementByKey(key);
             return true;
         } catch (Exception e) {
@@ -85,7 +110,19 @@ public class BasePage {
             driver.executeScript("flutter:waitForFirstFrame");
         } catch (Exception e) {
             System.err.println("❌ Failed to wait for app to be idle");
-            e.printStackTrace();
+        }
+    }
+
+    public void closeNotification() {
+        if (driver instanceof AndroidDriver) {
+            androidDriver = (AndroidDriver) driver;
+            androidDriver.openNotifications();
+            try {
+                androidDriver.findElement(AppiumBy.androidUIAutomator("new UiSelector().text(\"Clear all\")")).click();
+            } catch (Exception ignored) {
+            }
+        } else {
+            System.out.println("❌ Not an Android device. Cannot open notifications.");
         }
     }
 }

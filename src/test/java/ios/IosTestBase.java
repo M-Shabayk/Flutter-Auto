@@ -32,7 +32,7 @@ public class IosTestBase {
             System.out.println("✅ Appium session started successfully.");
             capabilities = new DesiredCapabilities();
             capabilities.setCapability("platformName", "iOS");
-            capabilities.setCapability("platformVersion", "17.0");
+            capabilities.setCapability("platformVersion", "17.0"); // ios version
             capabilities.setCapability("deviceName", "iPhone 16 Pro Max");
             capabilities.setCapability("automationName", "XCUITest");
             capabilities.setCapability("appium:app", System.getProperty("user.dir") + "/apps/app-stg-debug.apk");
