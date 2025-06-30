@@ -37,3 +37,4 @@ build/
 ### Mac OS ###
 .DS_Storeapps/*.apk
 Documents/Github/sak/apps/app-stg-debug.apk
+apps/*.apk
