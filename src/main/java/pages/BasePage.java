@@ -11,6 +11,8 @@ import org.openqa.selenium.WebDriverException;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BasePage {
     protected AndroidDriver androidDriver;
@@ -69,6 +71,26 @@ public class BasePage {
         return flutterFinder.byValueKey(key);
     }
 
+    // ✅ NEW: Get list of elements by key prefix (e.g., for notifications)
+    protected List<FlutterElement> getElementsByKey(String prefixKey) {
+        List<FlutterElement> elements = new ArrayList<>();
+        int index = 0;
+
+        while (true) {
+            try {
+                String dynamicKey = prefixKey + "_" + index;
+                waitForElementByKey(dynamicKey, 10);
+                elements.add(getElementByKey(dynamicKey));
+                index++;
+            } catch (Exception e) {
+                break; // No more elements found
+            }
+        }
+        return elements;
+    }
+
+
+
     // 🔹 Get element by text
     protected FlutterElement getElementByText(String text) {
         return flutterFinder.byText(text);
@@ -93,6 +115,10 @@ public class BasePage {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    protected boolean isListEmpty(List<FlutterElement> elements) {
+        return elements == null || elements.isEmpty();
     }
 
     // 🔹 Generic wait for duration (fallback)
