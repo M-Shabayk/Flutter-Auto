@@ -11,7 +11,7 @@ public class OtpScreen extends BasePage {
 
     // Element keys as constants
     private static final String OTP_No_BOX = "";
-    private static final String SUBMIT_BUTTON = "تأكيد التسجيل";
+   // private static final String SUBMIT_BUTTON = "تأكيد التسجيل";
 
 
     public FlutterElement getOtpNoField() {
@@ -19,13 +19,16 @@ public class OtpScreen extends BasePage {
         return getElementByKey(OTP_No_BOX);
     }
 
+   /*
     public FlutterElement getSubmitButton() {
         waitForElementByKey(SUBMIT_BUTTON, 10);
         return getElementByKey(SUBMIT_BUTTON);
     }
 
-    public void clickOnOtpNoBox() {
+    */
 
+    public void clickOnOtpNoBox() {
+        clickOnElement(getOtpNoField());
         getOtpNoField().click();
     }
 
@@ -35,12 +38,17 @@ public class OtpScreen extends BasePage {
         enterText(getOtpNoField(), phoneNumber);
     }
 
+    /*
     public void clickOnsubmitButton() {
         clickOnElement(getSubmitButton());
     }
 
+     */
+/*
     public void enterByPhoneNumber(String Number) {
         enterOtpNumber(Number);
         clickOnsubmitButton();
     }
+
+ */
 }
