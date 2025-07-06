@@ -62,15 +62,3 @@ public class AndroidTestBase {
         EmulatorManager.closeEmulator();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

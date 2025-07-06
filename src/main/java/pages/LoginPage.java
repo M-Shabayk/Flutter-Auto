@@ -9,7 +9,7 @@ public class LoginPage extends BasePage {
     // Element keys as constants
     private static final String SKIP_BUTTON_KEY = "skip_button_onboarding";
     private static final String SKIP_BUTTON_TEXT = "تخطي";
-    private static final String MY_ACCOUNT_TAB_KEY = "my_account_tab";
+    private static final String MY_ACCOUNT_TAB_KEY = "تسجيل الدخول";
 
     public LoginPage(AppiumDriver appiumDriver, FlutterFinder flutterFinder) {
         super(appiumDriver, flutterFinder);
